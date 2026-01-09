@@ -5,6 +5,9 @@ import 'package:rick_and_morty_characters/feature/characters/data/repositories/c
 import 'package:rick_and_morty_characters/feature/characters/data/sources/characters_api.dart';
 import 'package:rick_and_morty_characters/feature/characters/data/sources/characters_cache.dart';
 import 'package:rick_and_morty_characters/feature/characters/domain/repositories/characters_repository.dart';
+import 'package:rick_and_morty_characters/feature/favorites/data/repositories/favorites_repository_impl.dart';
+import 'package:rick_and_morty_characters/feature/favorites/data/sources/favorites_storage.dart';
+import 'package:rick_and_morty_characters/feature/favorites/domain/repositories/favorites_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
@@ -27,11 +30,19 @@ Future<void> initializeDependencies() async {
     () => CharactersCache(getIt<SharedPreferences>()),
   );
 
+  getIt.registerLazySingleton<FavoritesStorage>(
+    () => FavoritesStorage(getIt<SharedPreferences>()),
+  );
+
   // Reposotories
   getIt.registerLazySingleton<CharactersRepository>(
     () => CharactersRepositoryImpl(
       api: getIt<CharactersApi>(),
       cache: getIt<CharactersCache>(),
     ),
+  );
+
+  getIt.registerLazySingleton<FavoritesRepository>(
+    () => FavoritesRepositoryImpl(getIt<FavoritesStorage>()),
   );
 }

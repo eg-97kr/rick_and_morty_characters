@@ -7,12 +7,14 @@ class CharacterCard extends StatelessWidget {
     required this.name,
     required this.status,
     required this.gender,
+    required this.favoriteButton,
   });
 
   final String image;
   final String name;
   final String status;
   final String gender;
+  final Widget favoriteButton;
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +65,7 @@ class CharacterCard extends StatelessWidget {
                 ],
               ),
             ),
+            favoriteButton,
           ],
         ),
       ),

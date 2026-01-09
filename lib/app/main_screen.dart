@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rick_and_morty_characters/app/di.dart';
 import 'package:rick_and_morty_characters/feature/characters/presentation/screens/characters_wrapper_screen.dart';
+import 'package:rick_and_morty_characters/feature/favorites/domain/repositories/favorites_repository.dart';
+import 'package:rick_and_morty_characters/feature/favorites/presentation/bloc/favorites_bloc.dart';
+import 'package:rick_and_morty_characters/feature/favorites/presentation/bloc/favorites_event.dart';
+import 'package:rick_and_morty_characters/feature/favorites/presentation/screens/favorites_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -16,40 +22,30 @@ class _MainScreenState extends State<MainScreen> {
     final pages = <Widget>[
       const CharactersWrapperScreen(),
       // Пока заглушка под Favorites.
-      const _PlaceholderPage(title: 'Favorites (TODO)'),
-      // Позже заменим на: const FavoritesPage(),
+      const FavoritesScreen(),
     ];
 
-    return Scaffold(
-      body: IndexedStack(index: _index, children: pages),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _index,
-        onTap: (i) => setState(() => _index = i),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people_alt_outlined),
-            label: 'Characters',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star_border),
-            label: 'Favorites',
-          ),
-        ],
+    return BlocProvider<FavoritesBloc>(
+      create: (context) =>
+          FavoritesBloc(getIt<FavoritesRepository>())
+            ..add(const FavoritesStarted()),
+      child: Scaffold(
+        body: IndexedStack(index: _index, children: pages),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _index,
+          onTap: (i) => setState(() => _index = i),
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.people_alt_outlined),
+              label: 'Characters',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.star_border),
+              label: 'Favorites',
+            ),
+          ],
+        ),
       ),
-    );
-  }
-}
-
-class _PlaceholderPage extends StatelessWidget {
-  const _PlaceholderPage({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: const Center(child: Text('Coming soon')),
     );
   }
 }

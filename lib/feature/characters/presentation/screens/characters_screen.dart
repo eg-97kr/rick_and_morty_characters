@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,6 +8,9 @@ import 'package:rick_and_morty_characters/feature/characters/presentation/bloc/c
 import 'package:rick_and_morty_characters/feature/characters/presentation/bloc/characters_state.dart';
 import 'package:rick_and_morty_characters/feature/characters/presentation/widgets/character_card.dart';
 import 'package:rick_and_morty_characters/feature/characters/presentation/widgets/loading_card.dart';
+import 'package:rick_and_morty_characters/feature/favorites/presentation/bloc/favorites_bloc.dart';
+import 'package:rick_and_morty_characters/feature/favorites/presentation/bloc/favorites_event.dart';
+import 'package:rick_and_morty_characters/feature/favorites/presentation/bloc/favorites_state.dart';
 
 class CharactersScreen extends StatefulWidget {
   const CharactersScreen({super.key});
@@ -61,6 +66,22 @@ class _CharactersScreenState extends State<CharactersScreen> {
                       name: item.name,
                       status: item.status,
                       gender: item.gender,
+                      favoriteButton:
+                          BlocSelector<FavoritesBloc, FavoritesState, bool>(
+                            selector: (state) =>
+                                state.favoriteIds.contains(item.id),
+                            builder: (context, isFavorite) => IconButton(
+                              onPressed: () {
+                                log('pressed');
+                                context.read<FavoritesBloc>().add(
+                                  FavoriteSelected(item),
+                                );
+                              },
+                              icon: Icon(
+                                isFavorite ? Icons.star : Icons.star_border,
+                              ),
+                            ),
+                          ),
                     );
                   }, childCount: state.items.length),
                 ),

@@ -14,7 +14,6 @@ class CharactersPageModel {
         (json['info'] as Map<String, dynamic>?) ?? {},
       ),
       results: resultsJson
-          .whereType<Map>()
           .map((e) => CharacterModel.fromJson(e.cast<String, dynamic>()))
           .toList(),
     );

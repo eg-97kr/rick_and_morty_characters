@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -71,12 +69,9 @@ class _CharactersScreenState extends State<CharactersScreen> {
                             selector: (state) =>
                                 state.favoriteIds.contains(item.id),
                             builder: (context, isFavorite) => IconButton(
-                              onPressed: () {
-                                log('pressed');
-                                context.read<FavoritesBloc>().add(
-                                  FavoriteSelected(item),
-                                );
-                              },
+                              onPressed: () => context
+                                  .read<FavoritesBloc>()
+                                  .add(FavoriteSelected(item)),
                               icon: Icon(
                                 isFavorite ? Icons.star : Icons.star_border,
                               ),

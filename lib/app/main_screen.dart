@@ -21,7 +21,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final pages = <Widget>[
       const CharactersWrapperScreen(),
-      // Пока заглушка под Favorites.
       const FavoritesScreen(),
     ];
 

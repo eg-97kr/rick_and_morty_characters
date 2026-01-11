@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rick_and_morty_characters/core/theme/cubit/theme_cubit.dart';
+import 'package:rick_and_morty_characters/core/theme/cubit/theme_state.dart';
 
 import 'package:rick_and_morty_characters/feature/characters/presentation/bloc/characters_bloc.dart';
 import 'package:rick_and_morty_characters/feature/characters/presentation/bloc/characters_event.dart';
@@ -74,6 +76,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
                                   .add(FavoriteSelected(item)),
                               icon: Icon(
                                 isFavorite ? Icons.star : Icons.star_border,
+                                color: isFavorite ? Colors.amber : null,
                               ),
                             ),
                           ),
@@ -93,6 +96,17 @@ class _CharactersScreenState extends State<CharactersScreen> {
                   ),
                 ),
             ],
+          );
+        },
+      ),
+      floatingActionButton: BlocSelector<ThemeCubit, ThemeState, ThemeMode>(
+        selector: (state) => state.mode,
+        builder: (context, mode) {
+          return FloatingActionButton(
+            onPressed: () => context.read<ThemeCubit>().switchingTheme(),
+            child: Icon(
+              mode == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode,
+            ),
           );
         },
       ),

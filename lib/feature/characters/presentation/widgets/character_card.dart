@@ -18,19 +18,19 @@ class CharacterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(12),
               child: Image.network(
                 image,
-                width: 72,
-                height: 72,
+                width: 90,
+                height: 90,
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -58,16 +58,38 @@ class CharacterCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(name, style: Theme.of(context).textTheme.titleMedium),
+                  Text(name, style: theme.textTheme.titleLarge),
                   const SizedBox(height: 4),
-                  Text('Status: $status'),
-                  Text('Gender: $gender'),
+                  infoAboutCharacter(
+                    title: 'Status',
+                    value: status,
+                    theme: theme,
+                  ),
+                  infoAboutCharacter(
+                    title: 'Gender',
+                    value: gender,
+                    theme: theme,
+                  ),
                 ],
               ),
             ),
             favoriteButton,
           ],
         ),
+      ),
+    );
+  }
+
+  Widget infoAboutCharacter({
+    required String title,
+    required String value,
+    required ThemeData theme,
+  }) {
+    return RichText(
+      text: TextSpan(
+        text: '$title: ',
+        style: theme.textTheme.titleMedium,
+        children: [TextSpan(text: value, style: theme.textTheme.bodyMedium)],
       ),
     );
   }

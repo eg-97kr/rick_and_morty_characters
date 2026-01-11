@@ -11,6 +11,8 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favorites'),
@@ -47,7 +49,12 @@ class FavoritesScreen extends StatelessWidget {
           }
 
           if (state.sortedItems.isEmpty) {
-            return const Center(child: Text('No favorites yet'));
+            return Center(
+              child: Text(
+                'No favorites yet',
+                style: theme.textTheme.titleLarge,
+              ),
+            );
           }
 
           return CustomScrollView(
@@ -88,7 +95,7 @@ class FavoritesScreen extends StatelessWidget {
                       status: item.status,
                       gender: item.gender,
                       favoriteButton: IconButton(
-                        icon: const Icon(Icons.star),
+                        icon: const Icon(Icons.star, color: Colors.amber),
                         onPressed: () => context.read<FavoritesBloc>().add(
                           FavoriteRemoved(item.id),
                         ),

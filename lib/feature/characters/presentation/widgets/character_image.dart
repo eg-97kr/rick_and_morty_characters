@@ -32,11 +32,6 @@ class CharacterImage extends StatelessWidget {
           ),
         ),
 
-        // const SizedBox(
-        //   width: 72,
-        //   height: 72,
-        //   child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
-        // ),
         errorWidget: (context, url, error) => Container(
           width: 90,
           height: 90,

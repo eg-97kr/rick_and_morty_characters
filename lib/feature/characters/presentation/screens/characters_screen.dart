@@ -54,7 +54,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, _) => const LoadingCard(),
-                    childCount: 6,
+                    childCount: 4,
                   ),
                 )
               else

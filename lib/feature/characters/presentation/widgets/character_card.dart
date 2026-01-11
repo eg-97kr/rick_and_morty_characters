@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rick_and_morty_characters/feature/characters/presentation/widgets/character_image.dart';
 
 class CharacterCard extends StatelessWidget {
   const CharacterCard({
@@ -27,31 +28,32 @@ class CharacterCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                image,
-                width: 90,
-                height: 90,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return const SizedBox(
-                    width: 72,
-                    height: 72,
-                    child: Center(
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: 72,
-                    height: 72,
-                    color: Colors.grey.shade300,
-                    alignment: Alignment.center,
-                    child: const Icon(Icons.person, size: 32),
-                  );
-                },
-              ),
+              child: CharacterImage(url: image),
+              // Image.network(
+              //   image,
+              //   width: 90,
+              //   height: 90,
+              //   fit: BoxFit.cover,
+              //   loadingBuilder: (context, child, loadingProgress) {
+              //     if (loadingProgress == null) return child;
+              //     return const SizedBox(
+              //       width: 72,
+              //       height: 72,
+              //       child: Center(
+              //         child: CircularProgressIndicator(strokeWidth: 2),
+              //       ),
+              //     );
+              //   },
+              //   errorBuilder: (context, error, stackTrace) {
+              //     return Container(
+              //       width: 72,
+              //       height: 72,
+              //       color: Colors.grey.shade300,
+              //       alignment: Alignment.center,
+              //       child: const Icon(Icons.person, size: 32),
+              //     );
+              //   },
+              // ),
             ),
             const SizedBox(width: 12),
             Expanded(
